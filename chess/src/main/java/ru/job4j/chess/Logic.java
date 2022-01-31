@@ -21,6 +21,16 @@ public final class Logic {
     }
 
     private boolean free(Cell[] steps) throws OccupiedCellException {
+        for (int index = 0; index != figures.length; index++) {
+            Figure figure = figures[index];
+            for (Cell step : steps) {
+                if (figure.position().equals(step)) {
+                    throw new OccupiedCellException(
+                            String.format("Could not move throw %s", step)
+                    );
+                }
+            }
+        }
         return true;
     }
 
@@ -36,6 +46,8 @@ public final class Logic {
                 return index;
             }
         }
-        throw new FigureNotFoundException();
+        throw new FigureNotFoundException(
+                String.format("Could not fing figure on cell %s", cell.toString())
+        );
     }
 }
